@@ -383,6 +383,17 @@ button {
 .hero__card--r { --r: 3deg; transform: rotate(3deg); animation: snad-float 6.5s ease-in-out -4s infinite; }
 .hero__card .media { box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28); }
 
+/* Phones: the title fills the width, so the decorations move above it instead of on top of it. */
+@media (max-width: 699px) {
+  .hero { padding-top: 112px; }
+  .hero__ring { display: none; }
+  .hero__diamond { left: var(--gutter); top: 52px; width: 16px; height: 16px; }
+  .hero__badge { right: 0; bottom: auto; top: -84px; width: 76px; height: 76px; }
+  .hero__line--indent { padding-left: 0; }
+  .hero__row { gap: 24px; }
+  .hero__cards { gap: 10px; }
+}
+
 /* ---------- Orange marquee ---------- */
 .band {
   background: var(--orange);
@@ -893,4 +904,34 @@ button {
     transition-duration: 0.01ms !important;
   }
   .splash { display: none; }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 699px) {
+  .btn-row { width: 100%; }
+  .btn-row .btn { flex: 1 1 auto; text-align: center; padding: 15px 22px; }
+}
+@media (max-width: 699px) {
+  /* Home service cards: drop the tall desktop spacing */
+  .svc-card { min-height: 0; gap: 34px; padding: 22px; border-radius: 24px; }
+  .svc-card h3 { font-size: 24px; }
+  .svc-card--all { min-height: 120px; }
+
+  /* Word wheel: orb sits in the empty space under the words instead of over them */
+  .wheel--on .wheel__orb {
+    top: auto;
+    bottom: 6%;
+    right: 0;
+    margin-top: 0;
+    width: 84px;
+    height: 84px;
+    font-size: 40px;
+  }
+
+  /* Services page */
+  .svc-hero__ring { top: -40px; right: -70px; width: 140px; height: 140px; }
+  .vertical { padding: 24px 22px; }
+  .vertical h2 { font-size: min(8.4vw, 34px); }
+  .vertical p { font-size: 16px; }
+  .vertical__tags span { font-size: 14px; padding: 8px 14px; }
 }

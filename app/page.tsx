@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import Media from "@/components/Media";
+import Motion from "@/components/Motion";
 import Splash from "@/components/Splash";
 import {
   ACRONYM,
@@ -330,6 +331,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {/* Runs after this page has hydrated, so it never fights React over inline styles. */}
+      <Motion />
     </>
   );
 }

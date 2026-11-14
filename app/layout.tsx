@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Instrument_Sans } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer, { Contact } from "@/components/Footer";
-import Motion from "@/components/Motion";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -48,7 +47,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Contact />
           <Footer />
         </div>
-        <Motion />
       </body>
     </html>
   );

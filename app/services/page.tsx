@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Media from "@/components/Media";
+import Motion from "@/components/Motion";
 import { VERTICALS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -83,6 +84,8 @@ export default function Services() {
           </article>
         ))}
       </section>
+      {/* Runs after this page has hydrated, so it never fights React over inline styles. */}
+      <Motion />
     </>
   );
 }
