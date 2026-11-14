@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SNAD Media website
 
-## Getting Started
+Next.js 16 (App Router) build of the "SNAD Creative Agency Overview" design: Home and Services pages.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start   # production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | Where |
+| --- | --- |
+| All text (services, case studies, team, blog, contact) | `lib/content.ts` |
+| Styles (colours, type, animation) | `app/globals.css` |
+| Home / Services pages | `app/page.tsx`, `app/services/page.tsx` |
+| Nav, footer, splash, scroll effects | `components/` |
+| Animated illustrations (Storyset, cuate style) | `public/illustrations/*.svg` |
+| Photos (Unsplash) | `public/images/` |
+| Client logos | `public/logos/client-01.svg` … `client-20.svg` |
+| SNAD logo files | `public/snad-logo-light.svg`, `snad-logo-dark.svg`, `snad-wordmark.svg` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Replace before launch
 
-## Learn More
+These are **sample** stand-ins, marked `SAMPLE` in `lib/content.ts`:
 
-To learn more about Next.js, take a look at the following resources:
+- **Case studies**: client, title and result figures, plus the cover images `public/images/case-*.jpg` (4:3).
+- **Team**: names, roles and photos `public/images/team-*.jpg` (1 and 3 square, 2 and 4 portrait 3:4).
+- **Blog posts**: titles, dates, covers `public/images/blog-*.jpg` (16:10).
+- **Client logos**: the 20 marks in `public/logos/` are made-up brands. Drop in real one-colour SVG/PNG logos with
+  the same file names (add more by extending `CLIENT_LOGOS`).
+- **Social links**: `SOCIALS` points to the platform home pages; set SNAD's profile URLs.
+- **SNAD logo**: built from Archivo Black Expanded to match the design's wordmark. If SNAD has an official logo,
+  swap `components/Logo.tsx` (nav/footer/splash) and `app/icon.svg` (favicon).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Credits
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Illustrations by [Storyset](https://storyset.com) (free licence requires the attribution kept in the footer).
+Photos from [Unsplash](https://unsplash.com).
