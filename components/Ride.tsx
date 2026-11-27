@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import Rickshaw from "./Rickshaw";
 import { useSound } from "./SoundProvider";
 import { STOPS, accent, boardColor } from "@/lib/data";
+import { SERVICES, serviceCta, serviceHrefByStop } from "@/lib/services";
 import { canMotion, clamp } from "@/lib/motion";
 
 /* "SNAD ki Sawari": pinned horizontal scroll on desktop (>=900px).
@@ -170,14 +172,9 @@ export default function Ride() {
                   <div className="chips">
                     {s.tags.map((t) => <span key={t} className="chip">{t}</span>)}
                   </div>
-                  <a
-                    href="#contact"
-                    className="step-inside"
-                    style={{ borderBottomColor: accent(s) }}
-                    onClick={() => window.dispatchEvent(new CustomEvent("snad:pick-stop", { detail: s.short }))}
-                  >
-                    Step inside →
-                  </a>
+                  <Link href={serviceHrefByStop(s.id)} className="step-inside" style={{ borderBottomColor: accent(s) }}>
+                    {serviceCta(SERVICES.find((x) => x.stopId === s.id)!)}
+                  </Link>
                 </article>
               </div>
             </div>

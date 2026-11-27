@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { STICKERS } from "@/lib/data";
 import { canMotion, finePointer } from "@/lib/motion";
 
 /* Site-wide effects: scroll reveals, doodle cursor, and stickers that pop where you click empty space. */
 export default function GlobalFx() {
   const cursor = useRef<HTMLImageElement>(null);
+  const pathname = usePathname();
 
   /* reveal on scroll: only elements below the fold start hidden, so nothing is lost without JS */
   useEffect(() => {
@@ -19,7 +21,9 @@ export default function GlobalFx() {
       }),
       { threshold: 0.12 }
     );
-    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+    document.querySelectorAll<HTMLElement>("[data-reveal]:not(.rv-in)").forEach((el) => {
+      // already hidden by an earlier run (route change or dev double-run): just watch it again
+      if (el.classList.contains("rv")) { io.observe(el); return; }
       if (el.getBoundingClientRect().top <= window.innerHeight * 0.92) return;
       el.style.transitionDelay = `${el.dataset.reveal || 0}ms`;
       el.classList.add("rv");
@@ -27,7 +31,7 @@ export default function GlobalFx() {
       io.observe(el);
     });
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
 
   /* doodle cursor (pointer devices only) */
   useEffect(() => {

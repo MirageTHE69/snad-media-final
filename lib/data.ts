@@ -128,7 +128,7 @@ export const CLIENTS_B: Client[] = [
 /** EXAMPLE case studies */
 export const CASES = [
   { client: "Kesar Dairy", service: "Performance", metric: "+218%", label: "growth in leads", line: "Rebuilt the funnel, reel to WhatsApp.", bg: COLORS.pink },
-  { client: "Patang Toys", service: "Film", metric: "12M+", label: "views on one film", line: "One Diwali film. Every family group.", bg: COLORS.yellow },
+  { client: "Patang Toys", service: "Film", metric: "12M+", label: "views on one film", line: "One Uttarayan film. Every family group.", bg: COLORS.yellow },
   { client: "Urja Solar", service: "Media", metric: "6.4x", label: "return on ad spend", line: "Smart buying, sunny results.", bg: COLORS.teal },
 ];
 
@@ -162,9 +162,9 @@ export const CONTACT = {
 };
 
 export const NAV = [
-  { href: "#ride", label: "The Ride" },
-  { href: "#work", label: "Work" },
-  { href: "#garage", label: "Studio 79" },
-  { href: "#cast", label: "The Cast" },
-  { href: "#stop-media", label: "Services" },
+  { href: "/#ride", label: "The Ride" },
+  { href: "/services", label: "Services" },
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/careers", label: "Careers" },
 ];

@@ -2,6 +2,8 @@
 
 import { useRef } from "react";
 import { CASES } from "@/lib/data";
+import { CASE_STUDIES } from "@/lib/cases";
+import Link from "next/link";
 import { canMotion, finePointer } from "@/lib/motion";
 
 function Poster({ c, i }: { c: (typeof CASES)[number]; i: number }) {
@@ -15,7 +17,7 @@ function Poster({ c, i }: { c: (typeof CASES)[number]; i: number }) {
   };
   const leave = () => { if (ref.current) ref.current.style.transform = ""; };
   return (
-    <a ref={ref} href="#contact" className="poster" data-reveal={i * 100} onPointerMove={move} onPointerLeave={leave}>
+    <Link ref={ref} href={`/work/${CASE_STUDIES[i]?.slug ?? ""}`} className="poster" data-reveal={i * 100} onPointerMove={move} onPointerLeave={leave}>
       <div className="poster-screen" style={{ background: c.bg }}>
         <div className="poster-client">{c.client} · {c.service}</div>
         <div className="poster-metric">{c.metric}</div>
@@ -23,7 +25,7 @@ function Poster({ c, i }: { c: (typeof CASES)[number]; i: number }) {
       </div>
       <img src="/img/poster-frame.webp" alt="" width={888} height={647} loading="lazy" />
       <div className="poster-line">{c.line}</div>
-    </a>
+    </Link>
   );
 }
 
@@ -45,7 +47,7 @@ export default function Cinema() {
         {CASES.map((c, i) => <Poster key={c.client} c={c} i={i} />)}
       </div>
       <div className="cinema-cta">
-        <a href="#contact" className="ticket">🎟 Grab a ticket: all work →</a>
+        <Link href="/work" className="ticket">🎟 Grab a ticket: all work →</Link>
       </div>
     </section>
   );

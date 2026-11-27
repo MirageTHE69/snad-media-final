@@ -1,5 +1,7 @@
+import Link from "next/link";
 import Logo from "./Logo";
 import { CONTACT, STOPS } from "@/lib/data";
+import { serviceHrefByStop } from "@/lib/services";
 
 export default function Footer() {
   return (
@@ -7,21 +9,22 @@ export default function Footer() {
       <div className="border-strip border-strip-footer" aria-hidden="true" />
       <div className="footer-grid">
         <div>
-          <a href="#top" aria-label="Back to top"><Logo variant="footer" /></a>
+          <Link href="/" aria-label="SNAD Media home"><Logo variant="footer" /></Link>
           <p className="footer-about">Creative, media and technology agency. Fassst, young and sorted.</p>
         </div>
         <div className="footer-col">
-          <div className="footer-h">THE STOPS</div>
+          <Link href="/services" className="footer-h">THE STOPS</Link>
           {STOPS.map((s) => (
-            <a key={s.id} href={`#${s.id}`}>{s.name} · {s.service}</a>
+            <Link key={s.id} href={serviceHrefByStop(s.id)}>{s.name} · {s.service}</Link>
           ))}
         </div>
         <div className="footer-col">
           <div className="footer-h">EXPLORE</div>
-          <a href="#work">Work</a>
-          <a href="#garage">Studio Seven Nine</a>
-          <a href="#cast">The Cast</a>
-          <a href="#contact">Contact</a>
+          <Link href="/services">Services</Link>
+          <Link href="/work">Work</Link>
+          <Link href="/about">About</Link>
+          <Link href="/careers">Careers</Link>
+          <Link href="/contact">Contact</Link>
           <div className="socials">
             <a href="#" aria-label="SNAD Media on Instagram">Instagram</a>
             <a href="#" aria-label="SNAD Media on LinkedIn">LinkedIn</a>

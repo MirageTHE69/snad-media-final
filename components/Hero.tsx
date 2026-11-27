@@ -133,7 +133,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={heroRef} className="hero" id="top">
+    <section ref={heroRef} className="hero">
       <HeroScene />
       <div className="hero-vignette" aria-hidden="true" />
 

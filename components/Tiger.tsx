@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useSound } from "./SoundProvider";
 
 /* Tiger mascot: peeks from bottom-left after the hero, hides during the ride and at contact.
@@ -17,7 +18,7 @@ export default function Tiger() {
       const el = ref.current; if (!el) return;
       const vh = window.innerHeight;
       const hero = document.querySelector(".hero"), ride = document.querySelector("#ride"), contact = document.querySelector("#contact");
-      const on = !!hero && hero.getBoundingClientRect().bottom < vh * 0.4;
+      const on = hero ? hero.getBoundingClientRect().bottom < vh * 0.4 : window.scrollY > 320;
       const atContact = !!contact && contact.getBoundingClientRect().top < vh * 0.7;
       const rr = ride?.getBoundingClientRect();
       const inRide = !!rr && window.innerWidth >= 900 && rr.top < vh * 0.5 && rr.bottom > vh * 0.5;
@@ -35,7 +36,7 @@ export default function Tiger() {
   return (
     <div ref={ref} className="tiger" onMouseLeave={() => setWink(false)}>
       <span className="tiger-bubble" style={{ opacity: wink ? 1 : 0, pointerEvents: wink ? "auto" : "none" }}>
-        Kya soch rahe ho? <a href="#contact">Let’s talk →</a>
+        Kya soch rahe ho? <Link href="/contact">Let’s talk →</Link>
       </span>
       <button
         type="button"
