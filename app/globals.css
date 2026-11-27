@@ -259,8 +259,45 @@ html.no-splash .splash { display: none; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; min-height: calc(100svh - var(--nav-h)); display: flex; flex-direction: column; overflow: hidden; background: var(--orange); }
-.hero-bg { position: absolute; inset: -3%; background: url(/img/hero-bg-hd.webp) center 60% / cover no-repeat; }
-.hero-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, rgba(20, 20, 20, 0) 40%, rgba(20, 20, 20, 0.28) 100%); }
+/* live hero scene (components/HeroScene.tsx) */
+.scene { position: absolute; inset: 0; overflow: hidden; background: #ee5a24; }
+.scene-layer { position: absolute; inset: -4%; will-change: translate; }
+.scene-scroll { position: absolute; inset: 0; transform: translate3d(0, calc(var(--hs, 0px) * var(--k, 0)), 0); }
+.scene-sky { position: absolute; inset: 0; background: linear-gradient(170deg, #ff9d2e 0%, #f97a22 30%, #ef5323 58%, #e5341f 85%); }
+.scene-sky::after { content: ""; position: absolute; left: -10%; top: -20%; width: 70%; height: 80%; background: radial-gradient(closest-side, rgba(255, 214, 102, 0.55), rgba(255, 214, 102, 0)); }
+.scene-sun { position: absolute; left: 11%; top: 19%; width: clamp(260px, 29vw, 480px); aspect-ratio: 1; translate: -50% -50%; }
+.sun-svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.sun-breathe, .sun-spin, .sun-core { transform-box: view-box; transform-origin: 0 0; } /* (0,0) is the sun centre in the viewBox */
+.sun-spin { animation: sun-spin 70s linear infinite; }
+.sun-breathe { animation: sun-breathe 6s ease-in-out infinite; }
+.sun-core { animation: sun-core 9s ease-in-out infinite; }
+.sky-star { position: absolute; translate: -50% -50%; overflow: visible; animation: star-twinkle 3.2s ease-in-out infinite; }
+.sky-star:nth-child(3n) { animation-duration: 2.6s; }
+.sky-star:nth-child(4n) { animation-duration: 4s; }
+.sky-spark { position: absolute; width: 22px; translate: -50% -50%; animation: spark 2.8s ease-in-out infinite; opacity: 0; }
+.cloud { position: absolute; left: 0; animation: cloud-drift 100s linear infinite; will-change: transform; }
+.cloud svg { display: block; width: 100%; height: auto; }
+.cloud:nth-child(even) svg { animation: cloud-bob 7s ease-in-out infinite; }
+.scene-hills-layer { top: auto; height: 62%; bottom: -4%; }
+.hills-svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.hill { transform-box: view-box; animation: hill-sway 11s ease-in-out infinite alternate; }
+.hill-a { animation-duration: 14s; }
+.hill-b { animation-duration: 11s; animation-delay: -4s; }
+.hill-c { animation-duration: 9s; animation-delay: -2s; }
+.hill-d { animation-duration: 12s; animation-delay: -6s; }
+.flower { transform-box: fill-box; transform-origin: 50% 100%; animation: flower-bob 3.4s ease-in-out infinite; }
+.scene-paused .scene *, .scene-paused .scene { animation-play-state: paused !important; }
+
+@keyframes sun-spin { to { transform: rotate(360deg); } }
+@keyframes sun-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+@keyframes sun-core { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(-18deg) scale(1.08); } }
+@keyframes star-twinkle { 0%, 100% { transform: scale(1) rotate(0deg); } 45% { transform: scale(1.28) rotate(14deg); } 55% { transform: scale(0.86) rotate(10deg); } }
+@keyframes spark { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); } 40% { opacity: 1; transform: scale(1) rotate(45deg); } 70% { opacity: 0; transform: scale(0.5) rotate(90deg); } }
+@keyframes cloud-drift { from { transform: translateX(-30vw); } to { transform: translateX(115vw); } }
+@keyframes cloud-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes hill-sway { from { transform: translateX(-26px); } to { transform: translateX(26px); } }
+@keyframes flower-bob { 0%, 100% { transform: rotate(-7deg) scale(1); } 50% { transform: rotate(7deg) scale(1.08); } }
+.hero-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, rgba(20, 20, 20, 0) 55%, rgba(20, 20, 20, 0.14) 100%); }
 .hero-content {
   position: relative; z-index: 3; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: clamp(16px, 3vh, 40px) 18px clamp(10px, 1.5vh, 18px); text-align: center;
@@ -622,7 +659,9 @@ html.doodle-cursor, html.doodle-cursor * { cursor: none !important; }
   .ride-layer, .ride-rick, .ride-hud { display: none !important; }
 
   .hero-rick { left: 12px; }
-  .hero-bg { background-position: 18% 40%; }
+  .scene-sun { left: 10%; top: 8%; width: clamp(220px, 58vw, 340px); }
+  .hide-on-phone { display: none; }
+  .scene-hills-layer { height: 48%; }
   .stone { width: calc(50% - 10px); max-width: 210px; }
 }
 
@@ -703,6 +742,7 @@ html.doodle-cursor, html.doodle-cursor * { cursor: none !important; }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .intro, .bob, .rick-wheel img, .marquee, .scroll-cue span, .rick-back-word { animation: none !important; }
+  .scene *, .intro, .bob, .rick-wheel img, .marquee, .scroll-cue span, .rick-back-word { animation: none !important; }
   .rv { opacity: 1; translate: none; }
+  .cloud { transform: translateX(var(--rest, 0)); }
 }

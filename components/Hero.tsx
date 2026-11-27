@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Rickshaw from "./Rickshaw";
+import HeroScene from "./HeroScene";
 import { useSound } from "./SoundProvider";
 import { ROTATOR } from "@/lib/data";
 import { canMotion, clamp, finePointer } from "@/lib/motion";
@@ -80,9 +81,10 @@ export default function Hero() {
     }, 3600);
 
     const onScroll = () => {
+      const r = hero.getBoundingClientRect();
+      if (canMotion()) hero.style.setProperty("--hs", `${Math.max(0, -r.top).toFixed(1)}px`);
       const rk = rickRef.current;
       if (!rk || !canMotion()) return;
-      const r = hero.getBoundingClientRect();
       const p = clamp(-r.top / (r.height * 0.7));
       rk.style.translate = `${p * window.innerWidth * 1.05}px 0`;
     };
@@ -99,10 +101,31 @@ export default function Hero() {
     };
     raf = requestAnimationFrame(loop);
 
+    /* pause the live background while the hero is off screen */
+    const io = new IntersectionObserver(([e]) => hero.classList.toggle("scene-paused", !e.isIntersecting), { threshold: 0 });
+    io.observe(hero);
+
+    /* phones (Android): tilt the device to shift the scene layers */
+    const DOE = window.DeviceOrientationEvent as unknown as { requestPermission?: unknown } | undefined;
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (!canMotion() || e.gamma == null || e.beta == null) return;
+      const w = hero.clientWidth, h = hero.clientHeight;
+      const dx = Math.max(-1, Math.min(1, e.gamma / 30)) * w * 0.5;
+      const dy = Math.max(-1, Math.min(1, (e.beta - 45) / 30)) * h * 0.5;
+      depths.forEach((el) => {
+        const k = parseFloat(el.dataset.depth || "0");
+        el.style.translate = `${-dx * k}px ${-dy * k}px`;
+      });
+    };
+    const useTilt = !finePointer() && !!DOE && typeof DOE.requestPermission !== "function";
+    if (useTilt) window.addEventListener("deviceorientation", onTilt);
+
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
+      io.disconnect();
+      if (useTilt) window.removeEventListener("deviceorientation", onTilt);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("scroll", onScroll);
       clearInterval(blink); clearInterval(wander); cancelAnimationFrame(raf);
@@ -111,7 +134,7 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className="hero" id="top">
-      <div className="hero-bg" data-depth="0.012" aria-hidden="true" />
+      <HeroScene />
       <div className="hero-vignette" aria-hidden="true" />
 
       <div className="hero-content">
