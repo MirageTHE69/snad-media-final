@@ -148,10 +148,10 @@ export const STUDIO = [
 
 /** EXAMPLE team (stock photos from Unsplash, names are placeholders) */
 export const CAST = [
-  { name: "Riya Mehta", role: "Creative Director", img: "/team/member-1.webp", color: COLORS.yellow, rot: -2 },
-  { name: "Kabir Shah", role: "Founder & Chief Driver", img: "/team/member-2.webp", color: COLORS.teal, rot: 1.5 },
-  { name: "Ananya Desai", role: "Head of Social", img: "/team/member-3.webp", color: COLORS.pink, rot: -1.5 },
-  { name: "Arjun Patel", role: "Tech Lead", img: "/team/member-4.webp", color: COLORS.green, rot: 2 },
+  { name: "Kabir Shah", role: "Founder & Chief Driver", img: "/team/member-2.webp", color: COLORS.red, route: "Strategy", fuel: "Cutting chai, 4 a day", since: "2017" },
+  { name: "Riya Mehta", role: "Creative Director", img: "/team/member-1.webp", color: COLORS.yellow, route: "Brand & Film", fuel: "Moodboards & mango lassi", since: "2018" },
+  { name: "Ananya Desai", role: "Head of Social", img: "/team/member-3.webp", color: COLORS.teal, route: "Social & Content", fuel: "Trending audio", since: "2020" },
+  { name: "Arjun Patel", role: "Tech Lead", img: "/team/member-4.webp", color: COLORS.purple, route: "Web & Automation", fuel: "Filter coffee, no sugar", since: "2019" },
 ];
 
 export const CONTACT = {

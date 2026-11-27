@@ -1,26 +1,59 @@
 import Image from "next/image";
-import { CAST } from "@/lib/data";
+import { CAST, COLORS } from "@/lib/data";
 
+const DARK_BG: string[] = [COLORS.red, COLORS.purple];
+
+/* The Cast: every team member gets a "SNAD Sawari Permit", a driver's ID card. */
 export default function Cast() {
   return (
     <section id="cast" className="cast" aria-labelledby="cast-h">
-      <div className="center-head" data-reveal="">
-        <div className="pill pill-ink">Starring</div>
-        <h2 id="cast-h" className="h2 h2-shadow cast-h">The <span className="yel">sorted</span> cast.</h2>
+      <div className="cast-head" data-reveal="">
+        <div>
+          <div className="pill pill-red">Licensed drivers</div>
+          <h2 id="cast-h" className="h2 cast-h">The <span className="red">sorted</span> cast.</h2>
+        </div>
+        <p className="cast-intro">
+          Every brand gets a driver who knows the route. Meet the people behind the wheel.
+        </p>
       </div>
-      <div className="cast-grid">
+
+      <div className="cast-grid" role="list">
         {CAST.map((m, i) => (
-          <article key={m.name} className="cast-card" data-reveal={i * 90} style={{ ["--r" as string]: `${m.rot}deg` } as React.CSSProperties}>
-            <div className="cast-photo" style={{ background: m.color }}>
-              <Image src={m.img} alt={`${m.name}, ${m.role}`} width={640} height={800} sizes="(max-width: 600px) 45vw, 280px" />
+          <article
+            key={m.name}
+            role="listitem"
+            className="permit"
+            data-reveal={i * 90}
+            style={{ ["--c" as string]: m.color, ["--t" as string]: DARK_BG.includes(m.color) ? "#fff" : "#141414" } as React.CSSProperties}
+          >
+            <header className="permit-top">
+              <span className="permit-title">SNAD SAWARI PERMIT</span>
+              <span className="permit-no">No. 0{i + 1}</span>
+            </header>
+
+            <div className="permit-photo">
+              <Image src={m.img} alt={`${m.name}, ${m.role}`} width={640} height={800} sizes="(max-width: 600px) 78vw, (max-width: 1100px) 45vw, 280px" />
+              <span className="permit-stamp" aria-hidden="true">
+                <span>Verified</span>
+                <b>✓</b>
+                <span>Sorted</span>
+              </span>
             </div>
-            <div className="cast-meta">
-              <div>
-                <h3>{m.name}</h3>
-                <div className="cast-role">{m.role}</div>
-              </div>
-              <span className="cast-arrow" style={{ background: m.color }} aria-hidden="true">↗</span>
+
+            <div className="permit-body">
+              <h3>{m.name}</h3>
+              <div className="permit-role">{m.role}</div>
+              <dl className="permit-facts">
+                <div><dt>Route</dt><dd>{m.route}</dd></div>
+                <div><dt>Runs on</dt><dd>{m.fuel}</dd></div>
+                <div><dt>On the road since</dt><dd>{m.since}</dd></div>
+              </dl>
             </div>
+
+            <footer className="permit-foot" aria-hidden="true">
+              <span className="permit-barcode" />
+              <span className="permit-plate">GJ 06 · SNAD</span>
+            </footer>
           </article>
         ))}
       </div>

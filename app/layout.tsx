@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SNAD Media | SNAD ki Sawari",
     description: "Brands people can’t stop looking at. A creative, media and technology agency from Vadodara.",
-    images: ["/img/hero-bg.webp"],
+    images: ["/img/hero-bg-hd.webp"],
   },
 };
 
@@ -31,6 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${outfit.variable} ${yatra.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: splashScript }} />
+        <link rel="preload" as="image" href="/img/hero-bg-hd.webp" type="image/webp" fetchPriority="high" />
       </head>
       <body>{children}</body>
     </html>
